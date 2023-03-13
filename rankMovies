@@ -1,0 +1,216 @@
+function deleteColumns() {
+  var ss = SpreadsheetApp.getActiveSpreadsheet();
+  var s = ss.getSheetByName('Sheet11');
+  var r = s.getRange('M1:s1');
+  var v = r.getValues();
+  var a = ss.getSheetByName('Sheet7');
+  var ar = a.getRange('A2:A8');
+  var attendees = ar.getValues();
+  var lastRow = s.getLastRow();
+
+
+// delete data of non-attendees
+for(var i=v[0].length-1;i>=0;i--) {
+    var attend = attendees[i][0];
+    var eleven = v[0][i];
+
+    var l = 0
+
+    
+    if(attend != eleven){
+      // Logger.log(attend)
+
+
+//delete titles with 5 rankings for non-attendees
+      for(var l=lastRow;l>0;l--) {
+        var personalRating = s.getRange(l+1,i+13)
+        // Logger.log(personalRating.getA1Notation())
+        // Logger.log(personalRating.getValue())
+      if(personalRating.getValue()===5){
+        s.deleteRow(l+1)
+        // Logger.log("if statement")
+        var newLastRow = s.getLastRow();
+        }
+      }
+
+      s.deleteColumn(i+13)
+    }
+    
+    if(attend === eleven){
+       for(var p=newLastRow;p>0;p--) {
+        var personalRatingHigh = s.getRange(p+1,i+13)
+        // Logger.log(personalRatingHigh.getA1Notation())
+        // Logger.log(personalRating.getA1Notation())
+        // Logger.log(personalRating.getValue())
+        // Logger.log("for")
+      if(personalRatingHigh.getValue()==''){
+        personalRatingHigh.setValue(3)
+        Logger.log(personalRatingHigh.getValue())
+        }
+      if(personalRatingHigh.getValue()===1){
+        s.deleteRow(p+1)
+        // Logger.log("if statement")
+        }
+      }
+  }
+  }
+  var newLastRow2 = s.getLastRow();
+  var averageR = s.getRange(2,13, newLastRow2-1, 26)
+  var averageV = averageR.getValues();
+
+//delete titles with 1 rankings for attendees
+
+
+
+
+//find average of ratings for actual attendees 
+  for(var n=averageV.length-1;n>=0; n--){
+    var aveArray = averageV[n].filter(function(element){
+      if(element > 0) return element;
+    });
+
+    var total = 0;
+
+    for(var i = 0; i < aveArray.length; i++) {
+        total += aveArray[i];
+    }
+
+//add average ratings to J colum
+    var avg = total / aveArray.length;
+    // Logger.log(avg)
+    s.getRange((n+2),10).setValue(avg)
+  }
+
+//sort ratings from highest to lowest
+  var range = s.getRange(2, 1,lastRow,17);
+  range.sort({column: 10, ascending: false}); 
+
+//take top 5 movie names and rating and print to dashboard
+var dashboard = ss.getSheetByName('dashboard');
+var titlesRange = s.getRange(2,1,6,1)
+var title = titlesRange.getValues()
+var rankingsRange = s.getRange(2,10,6,10)
+var ranking = rankingsRange.getValues()
+
+for(var b = 0; b<6; b++){
+  dashboard.getRange(b+2,1).setValue(title[b][0])
+  dashboard.getRange(b+2,2).setValue(ranking[b][0])
+  // Logger.log(ranking[b])
+}
+
+// reset sheet 11 from voting sheet
+var firstSheet = ss.getSheetByName('Vote Here!');
+var firstLast = firstSheet.getLastRow();
+var oneRange = firstSheet.getRange(2,1,firstLast,1);
+var one = oneRange.getValues()
+
+var twoRange = firstSheet.getRange(2,2,firstLast,2);
+var two = twoRange.getValues()
+
+var threeRange = firstSheet.getRange(2,3,lastRow,3);
+var three = threeRange.getValues()
+
+var fourRange = firstSheet.getRange(2,4,lastRow,4);
+var four = fourRange.getValues()
+
+var fiveRange = firstSheet.getRange(2,5,lastRow,5);
+var five = fiveRange.getValues()
+
+var sixRange = firstSheet.getRange(2,6,lastRow,6);
+var six = sixRange.getValues()
+
+var sevenRange = firstSheet.getRange(2,7,lastRow,7);
+var seven = sevenRange.getValues()
+
+var eightRange = firstSheet.getRange(2,8,lastRow,8);
+var eight = eightRange.getValues()
+
+var nineRange = firstSheet.getRange(2,9,lastRow,9);
+var nine = nineRange.getValues()
+
+var tenRange = firstSheet.getRange(2,10,lastRow,10);
+var ten = tenRange.getValues()
+
+var elvRange = firstSheet.getRange(2,11,lastRow,11);
+var elv = elvRange.getValues()
+
+var tweRange = firstSheet.getRange(2,12,lastRow,12);
+var twe = tweRange.getValues()
+
+var thiRange = firstSheet.getRange(2,13,lastRow,13);
+var thi = thiRange.getValues()
+
+var fouRange = firstSheet.getRange(2,14,lastRow,14);
+var fou = fouRange.getValues()
+
+var fifRange = firstSheet.getRange(2,15,lastRow,15);
+var fif = fifRange.getValues()
+
+var sixtRange = firstSheet.getRange(2,16,lastRow,16);
+var sixt = sixtRange.getValues()
+
+var sevRange = firstSheet.getRange(2,17,lastRow,17);
+var sev = sevRange.getValues()
+
+var eigRange = firstSheet.getRange(2,18,lastRow,18);
+var eig = eigRange.getValues()
+
+var ninRange = firstSheet.getRange(2,19,lastRow,19);
+var nin = ninRange.getValues()
+
+var twenRange = firstSheet.getRange(2,20,lastRow,20);
+var twen = twenRange.getValues()
+
+var twoneRange = firstSheet.getRange(2,21,lastRow,21);
+var twone = twoneRange.getValues()
+
+var twtRange = firstSheet.getRange(2,22,lastRow,22);
+var twt = twtRange.getValues()
+
+var twthRange = firstSheet.getRange(2,23,lastRow,23);
+var twth = twthRange.getValues()
+
+var twfRange = firstSheet.getRange(2,24,lastRow,24);
+var twf = twfRange.getValues()
+
+var twfiRange = firstSheet.getRange(2,25,lastRow,25);
+var twfi = twfiRange.getValues()
+
+var twsRange = firstSheet.getRange(2,26,lastRow,26);
+var tws = twsRange.getValues()
+
+// Logger.log((s.getRange(d+1,1)).getValues())
+
+
+// var allValues = fullRange.getValues();
+for(var d = 1; d<=firstLast; d++){
+// Logger.log(allValues)
+  s.getRange(d,1).setValue(one[d-1])
+  // Logger.log((s.getRange(d,1)).getValues())
+  s.getRange(d,2).setValue(two[d-1])
+  s.getRange(d,3).setValue(three[d-1])
+  s.getRange(d,4).setValue(four[d-1])
+  s.getRange(d,5).setValue(five[d-1])
+  s.getRange(d,6).setValue(six[d-1])
+  s.getRange(d,7).setValue(seven[d-1])
+  s.getRange(d,8).setValue(eight[d-1])
+  s.getRange(d,9).setValue(nine[d-1])
+  s.getRange(d,10).setValue(ten[d-1])
+  s.getRange(d,11).setValue(elv[d-1])
+  s.getRange(d,12).setValue(twe[d-1])
+  s.getRange(d,13).setValue(thi[d-1])
+  s.getRange(d,14).setValue(fou[d-1])
+  s.getRange(d,15).setValue(fif[d-1])
+  s.getRange(d,16).setValue(sixt[d-1])
+  s.getRange(d,17).setValue(sev[d-1])
+  s.getRange(d,18).setValue(eig[d-1])
+  s.getRange(d,19).setValue(nin[d-1])
+  s.getRange(d,20).setValue(twen[d-1])
+  s.getRange(d,21).setValue(twone[d-1])
+  s.getRange(d,22).setValue(twt[d-1])
+  s.getRange(d,23).setValue(twth[d-1])
+  s.getRange(d,24).setValue(twf[d-1])
+  s.getRange(d,25).setValue(twfi[d-1])
+  s.getRange(d,26).setValue(tws[d-1])
+  }
+  };
